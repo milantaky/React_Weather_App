@@ -44,7 +44,7 @@ export default function App() {
   }, [location]);
 
   return (
-    <>
+    <div className='weather-container'>
       <h1>Weather App</h1>
       <select onChange={e => {
         const selectedCity = cities.find(city => city.name === e.target.value);
@@ -57,6 +57,6 @@ export default function App() {
       {console.log(weatherData)}
       
       <WeatherInfo weatherInfo={weatherData}/>
-    </>
+    </div>
   )
 }
