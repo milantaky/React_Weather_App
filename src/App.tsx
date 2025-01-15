@@ -11,6 +11,23 @@ interface WeatherInfoProps {
   } | null;
 }
 
+function WeatherDetail({
+  description,
+  data,
+  units = "",
+}: {
+  description: string;
+  data: number | string;
+  units?: string;
+}){
+  return (
+    <div className="detail"> 
+      <span>{description}</span>
+      <span>{data + " " + units}</span>
+    </div>
+  );
+}
+
 function WeatherInfo({ weatherInfo }: WeatherInfoProps ){
   if(weatherInfo === null){
     return (
@@ -25,22 +42,10 @@ function WeatherInfo({ weatherInfo }: WeatherInfoProps ){
       <img src={imageUrl} alt="weather-icon"/>
 
       <div className="weather-details">
-        <div className="detail"> 
-          <span>Current temperature:</span>
-          <span>{weatherInfo.main.temp}&deg;C</span>
-        </div>
-        <div className="detail"> 
-          <span>Weather type:</span>
-          <span>{weatherInfo.weather[0].main}</span>
-        </div>
-        <div className="detail">
-          <span>Wind speed:</span> 
-          <span>{weatherInfo.wind.speed} m/s</span>
-        </div>
-        <div className="detail"> 
-          <span>Visibility:</span>
-          <span>{weatherInfo.visibility} m</span>
-        </div>
+        <WeatherDetail description="Current temperature:" data={weatherInfo.main.temp} units="&deg;C"/>
+        <WeatherDetail description="Weather type:" data={weatherInfo.weather[0].main}/>
+        <WeatherDetail description="Wind speed:" data={weatherInfo.wind.speed} units="m/s"/>
+        <WeatherDetail description="Visibility:" data={weatherInfo.visibility} units="m"/>
       </div>
     </div>
   );
