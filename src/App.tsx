@@ -11,7 +11,7 @@ import { cities } from './cities.tsx';
 function WeatherInfo({ weatherInfo }){
   if(weatherInfo === null){
     return (
-      <div>Please select a city</div>
+      <div className='select-city'>Please select a city</div>
     );
   }
 
@@ -19,11 +19,26 @@ function WeatherInfo({ weatherInfo }){
 
   return (
     <div className='weather-info'>
-      <div className="temperature">Current temperature: {weatherInfo.main.temp}&deg;C</div>
-      <div className="weather-type">Weather type: {weatherInfo.weather[0].main}</div>
-      <div className="weather-description">Weather description: {weatherInfo.weather[0].description}</div>
-      <div className="wind-speed">Wind speed: {weatherInfo.wind.speed} m/s</div>
       <img src={imageUrl} alt="weather-icon"/>
+
+      <div className="weather-details">
+        <div className="detail"> 
+          <span>Current temperature:</span>
+          <span>{weatherInfo.main.temp}&deg;C</span>
+        </div>
+        <div className="detail"> 
+          <span>Weather type:</span>
+          <span>{weatherInfo.weather[0].main}</span>
+        </div>
+        <div className="detail">
+          <span>Wind speed:</span> 
+          <span>{weatherInfo.wind.speed} m/s</span>
+        </div>
+        <div className="detail"> 
+          <span>Visibility:</span>
+          <span>{weatherInfo.visibility} m</span>
+        </div>
+      </div>
     </div>
   );
 }
