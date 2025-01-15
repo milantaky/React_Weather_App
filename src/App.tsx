@@ -2,13 +2,16 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import { cities } from './cities.tsx';
 
-// type LocationData = {
-//   name: string;
-//   lat: number;
-//   long: number;
-// };
+interface WeatherInfoProps {
+  weatherInfo: {
+    main: { temp: number };
+    weather: { main: string; description: string; icon: string }[];
+    wind: { speed: number };
+    visibility: number;
+  } | null;
+}
 
-function WeatherInfo({ weatherInfo }){
+function WeatherInfo({ weatherInfo }: WeatherInfoProps ){
   if(weatherInfo === null){
     return (
       <div className='select-city'>Please select a city</div>
@@ -43,10 +46,11 @@ function WeatherInfo({ weatherInfo }){
   );
 }
 
+
 export default function App() {
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState<{ name: string; long: string; lat: string } | undefined>(undefined);
   const [weatherData, setWeatherData] = useState(null);
-  const url = location === null ? "" : `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.long}&units=metric&appid=${import.meta.env.VITE_WEATHER_APP_API_KEY}`;
+  const url = location === undefined ? "" : `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.long}&units=metric&appid=${import.meta.env.VITE_WEATHER_APP_API_KEY}`;
 
   useEffect(() => {
     if(location){
@@ -56,7 +60,7 @@ export default function App() {
       .catch(error => console.error('Error fetching weather data:', error));
     }
 
-  }, [location]);
+  }, [location, url]);
 
   return (
     <div className='weather-container'>
@@ -69,7 +73,6 @@ export default function App() {
           return <option key={city.name} value={city.name}>{city.name}</option>
           })}
       </select>
-      {console.log(weatherData)}
       
       <WeatherInfo weatherInfo={weatherData}/>
     </div>
